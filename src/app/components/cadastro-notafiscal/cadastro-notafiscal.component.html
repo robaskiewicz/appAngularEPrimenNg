@@ -1,0 +1,124 @@
+<div class="container">
+  <h2 style="text-align: center;">Nota fiscal</h2>
+
+  <form (ngSubmit)="salvar()">
+
+    <div style="display: flex; flex-direction: column; gap: 2%;margin-bottom: 1%;">
+      <label for="endereco">Endereço</label>
+      <input pInputText id="endereco"
+             aria-describedby="username-help"
+             name="endereco"
+             [(ngModel)]="notaSelected.endereco" autocomplete="off"/>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 2%;margin-bottom: 1%; width: 100%">
+      <label for="forne">Fornecedor</label>
+      <p-autocomplete name="fornecedor"
+                      id="forne"
+                      styleClass="w-full"
+                      placeholder="Fornecedor"
+                      [(ngModel)]="notaSelected.fornecedor"
+                      [suggestions]="fornecedores"
+                      (completeMethod)="search($event)"
+                      field="razaoSocial"/>
+    </div>
+
+
+    <div class="flex flex-col gap-2">
+
+    </div>
+
+
+    <div style="font-size: 30px;margin-top: 2%;background-color: #EEEEEE;
+      padding: 1%;border-radius: 5px;color: #57a996;">
+      <span>Valor total da nota: </span>
+      {{ notaSelected.valorTotalNota | currency: 'BRL' }}
+    </div>
+
+
+    <br>
+    <div style="display: flex;gap: 2%">
+      <div style="display: flex;flex-direction: column; gap: 2%;margin-bottom: 1%; width: 100%;flex: 1;">
+        <label for="produto">Produto</label>
+        <p-autocomplete name="produto"
+                        id="produto"
+                        [(ngModel)]="itemNotaSelected.produto"
+                        [suggestions]="produtos"
+                        (completeMethod)="searchProduto($event)"
+                        field="descricao"/>
+      </div>
+
+      <div style="display: flex;flex-direction: column; gap: 2%;margin-bottom: 1%; width: 100%;flex: 1;">
+        <label>Quantidade</label>
+        <p-inputnumber inputId="integeronly"
+                       class="ng-invalid ng-dirty"
+                       name="qtd"
+                       id="qtd"
+                       [(ngModel)]="itemNotaSelected.qtd"/>
+      </div>
+
+      <div style="display: flex;flex-direction: column; gap: 2%;margin-bottom: 1%; width: 100%;flex: 1;">
+        <label>Valor unitário</label>
+        <p-inputnumber [(ngModel)]="itemNotaSelected.valorUnitario"
+                       name="valorUnitario"
+                       mode="currency"
+                       inputId="currency-brazil"
+                       locale="pt-BR"
+                       currency="BRL"/>
+      </div>
+
+      <div style="flex: 1; display: flex;align-items: center;">
+        <p-button type="button" title="ADD" icon="pi pi-arrow-down"
+                  severity="success"
+                  (onClick)="adicionarItem()"></p-button>
+      </div>
+    </div>
+
+    <br>
+
+
+    <p-table [value]="notaSelected.itens" stripedRows
+             [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template #header>
+        <tr>
+          <th>Produto</th>
+          <th>Valor unitário</th>
+          <th>quantidade</th>
+          <th>Valor total</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-itemNota>
+        <tr>
+          <td>{{ itemNota.produto.descricao }}</td>
+          <td>{{ itemNota.valorUnitario | currency: 'BRL' }}</td>
+          <td>{{ itemNota.qtd }}</td>
+          <td>{{ itemNota.valorTotalItem | currency: 'BRL' }}</td>
+          <td>
+            <p-button type="button"
+                      (click)="editarItemNota(itemNota)"
+                      severity="contrast"
+                      title="editar"
+                      icon="pi pi-pencil"></p-button>
+
+            <p-button type="button"
+                      (click)="exluirItemNota(itemNota)"
+                      severity="danger"
+                      title="excluir"
+                      icon="pi pi-times"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+
+    <div style="display: flex;gap: 2%; margin-top: 2%;">
+      <button style="flex: 1" type="submit" pButton label="Salvar" icon="pi pi-save"></button>
+      <button style="flex: 1" pButton type="button" label="Voltar a lista" icon="pi pi-arrow-left"
+              severity="danger"
+              [routerLink]="['/listanotas']"></button>
+    </div>
+  </form>
+</div>
+
+

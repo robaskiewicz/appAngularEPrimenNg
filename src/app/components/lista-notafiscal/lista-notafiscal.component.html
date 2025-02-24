@@ -1,0 +1,113 @@
+
+<h2 style="text-align: center;">Lista de Notas fiscais</h2>
+
+<p-table [value]="notas" dataKey="id"
+         [globalFilterFields]="['numeroNota','dataEHoraEmissao','fornecedor.razaoSocial','endereco','valorTotalNota']"
+         [tableStyle]="{ 'min-width': '60rem' }"
+         [expandedRowKeys]="expandedRows" (onRowExpand)="onRowExpand($event)"
+         (onRowCollapse)="onRowCollapse($event)">
+  <ng-template #caption>
+    <div class="flex flex-wrap justify-end gap-2">
+
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      <th style="width: 5rem"></th>
+      <th>Número da nota</th>
+      <th>Data e hora de emissão</th>
+      <th>Fornecedor</th>
+      <th>Endereço</th>
+      <th>Valor total da nota</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>
+        <p-columnFilter
+          type="text"
+          matchMode="contains"
+          field="numeroNota"
+          placeholder="Número da nota"
+          ariaLabel="Número da nota"/>
+      </th>
+      <th>
+        <p-columnFilter
+          type="text"
+          matchMode="contains"
+          field="dataEHoraEmissao"
+          placeholder="Filtro de Data da emissão"
+          ariaLabel="Filtro de Data da emissão"/>
+      </th>
+      <th>
+        <p-columnFilter
+          type="text"
+          matchMode="contains"
+          field="fornecedor.razaoSocial"
+          placeholder="Filtro de fornecedor"
+          ariaLabel="Filtro de fornecedor"/>
+      </th>
+      <th>
+        <p-columnFilter
+          type="text"
+          matchMode="contains"
+          field="endereco"
+          placeholder="Filtro de endereço"
+          ariaLabel="Filtro de endereço"/>
+      </th>
+      <th>
+        <p-columnFilter
+          type="text"
+          matchMode="contains"
+          field="valorTotalNota"
+          placeholder="Filtro de valor da nota"
+          ariaLabel="Filtro de valor da nota"/>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-notaa let-expanded="expanded">
+    <tr>
+      <td>
+        <p-button type="button" pRipple [pRowToggler]="notaa" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+      </td>
+      <td>{{ notaa.numeroNota }}</td>
+      <td>{{ notaa.dataEHoraEmissao | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+      <td>{{ notaa.fornecedor.razaoSocial }}</td>
+      <td>{{ notaa.endereco }}</td>
+      <td>{{ notaa.valorTotalNota | currency: 'BRL'}}</td>
+    </tr>
+  </ng-template>
+  <ng-template #expandedrow let-notaa>
+    <tr>
+      <td colspan="7">
+        <div class="p-4">
+          <p-table [value]="notaa.itens" dataKey="id">
+            <ng-template #header>
+              <tr>
+                <th pSortableColumn="id" style="text-align: center;">Produto</th>
+                <th style="text-align: center;">valor Unitário</th>
+                <th style="text-align: center;">Quantidade</th>
+                <th style="text-align: center;">valor total por Item</th>
+              </tr>
+            </ng-template>
+            <ng-template #body let-itemN>
+              <tr>
+                <td style="text-align: center;">{{ itemN.produto.descricao }}</td>
+                <td style="text-align: center;">{{ itemN.valorUnitario | currency: 'BRL' }}</td>
+                <td style="text-align: center;">{{ itemN.qtd }}</td>
+                <td style="text-align: center;">{{ itemN.valorUnitario * itemN.qtd | currency: 'BRL' }}</td>
+              </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+              <tr>
+                <td colspan="6">There are no order for this product yet.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-button type="button" severity="contrast" label="Nova Nota" icon="pi pi-plus"
+          [routerLink]="['/cadastronotas']"></p-button>

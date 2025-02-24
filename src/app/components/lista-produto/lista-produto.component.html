@@ -1,0 +1,51 @@
+
+<h2 style="text-align: center;">Lista de Produtos</h2>
+
+<p-table #dt2
+         [value]="produtos"
+         stripedRows
+         [globalFilterFields]="['descricao']"
+         [tableStyle]="{ 'min-width': '50rem' }">
+
+
+  <ng-template #header>
+    <tr>
+      <th>Descrição</th>
+      <th>Situação</th>
+      <th>Ação</th>
+    </tr>
+    <tr>
+      <th>
+        <p-columnFilter
+          type="text"
+          field="descricao"
+          placeholder="Filtro descrição"
+          ariaLabel="Filtro descrição"
+        ></p-columnFilter>
+      </th>
+      <th></th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-prod>
+    <tr>
+      <td>{{ prod.descricao }}</td>
+      <td>{{ prod.situacaoProduto }}</td>
+      <td width="200px">
+        <p-button severity="contrast"
+                  title="editar"
+                  (click)="editarProduto(prod)">
+          <i class="pi pi-pencil"></i>
+        </p-button>
+        <p-button severity="danger"
+                  title="excluir"
+                  (click)="excluirProduto(prod.id)">
+          <i class="pi pi-times"></i>
+        </p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-button type="button" severity="contrast"  label="Novo Produto" icon="pi pi-plus"
+        [routerLink]="['/cadastroprodutos']"></p-button>
