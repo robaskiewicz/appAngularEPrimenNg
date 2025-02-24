@@ -1,0 +1,54 @@
+<div class="container">
+  <h2>Cadastro de Fornecedores</h2>
+  <form (ngSubmit)="salvar()">
+
+
+    <div style="display:flex;gap: 2%;">
+      <div style="display: flex;flex-direction: column; gap: 2%;margin-bottom: 1%; width: 100%;flex: 1;">
+        <label>Razão Social</label>
+        <input pInputText id="raSocial" name="razaoSocial"
+               [(ngModel)]="fornecedorSelected.razaoSocial" autocomplete="off"/>
+      </div>
+
+      <div style="display: flex;flex-direction: column; gap: 2%;margin-bottom: 1%; width: 100%;flex: 1;">
+        <label>E-mail</label>
+        <input pInputText id="email" name="email"
+               [(ngModel)]="fornecedorSelected.email" autocomplete="off"/>
+      </div>
+
+      <div style="display: flex;flex-direction: column; gap: 2%;margin-bottom: 1%; width: 100%;flex: 1;">
+        <label>Telefone</label>
+        <input pInputText id="tel" name="telefone"
+               [(ngModel)]="fornecedorSelected.telefone" autocomplete="off"/>
+      </div>
+
+      <div style="display: flex;flex-direction: column; gap: 2%;margin-bottom: 1%; width: 100%;flex: 1;">
+        <label>Cnpj</label>
+        <input pInputText id="cnpj" name="cnpj"
+               placeholder="cnpj"
+               [(ngModel)]="fornecedorSelected.cnpj" autocomplete="off"/>
+      </div>
+
+      <div style="display: flex;flex-direction: column; gap: 2%;margin-bottom: 1%; width: 100%;flex: 1;">
+        <label>Situação</label>
+        <p-dropdown
+          [options]="situacaoFornecedor"
+          [(ngModel)]="fornecedorSelected.situacaoFornecedor"
+          optionLabel="label"
+          name="sit"
+          optionValue="value"
+          placeholder="Selecione a situação"
+          class="w-full md:w-56">
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div style="display: flex;gap: 2%; margin-top: 2%;">
+      <button style="flex: 1" type="submit" pButton label="Salvar" icon="pi pi-save"></button>
+      <button style="flex: 1" pButton type="button" label="Voltar a lista" icon="pi pi-arrow-left"
+              severity="danger"
+              [routerLink]="['/listafornecedores']"></button>
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,88 @@
+
+<h2 style="text-align: center;">Lista de Fornecedores</h2>
+
+<p-table
+  #dt1
+  [value]="fornecedores"
+  [globalFilterFields]="['razaoSocial', 'email', 'telefone', 'cnpj', 'dataBaixa']"
+  stripedRows
+  [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template #header>
+    <tr>
+      <th>Razão social</th>
+      <th>Email</th>
+      <th>Telefone</th>
+      <th>Cnpj</th>
+      <th>Data da baixa</th>
+      <th>Situação</th>
+      <th>Ação</th>
+    </tr>
+    <tr>
+      <th>
+        <p-columnFilter
+          type="text"
+          matchMode="contains"
+          field="razaoSocial"
+          placeholder="Filtro razão social"
+          ariaLabel="Filtro razão social"/>
+      </th>
+      <th>
+        <p-columnFilter
+          type="text"
+          matchMode="contains"
+          field="email"
+          placeholder="Filtro de email"
+          ariaLabel="Filtro de email"/>
+      </th>
+      <th>
+        <p-columnFilter
+          type="text"
+          matchMode="contains"
+          field="telefone"
+          placeholder="Filtro de telefone"
+          ariaLabel="Filtro de telefone"/>
+      </th>
+      <th>
+        <p-columnFilter
+          type="text"
+          matchMode="contains"
+          field="cnpj"
+          placeholder="Filtro de cnpj"
+          ariaLabel="Filtro de cnpj"/>
+      </th>
+      <th>
+        <p-columnFilter
+          type="text"
+          matchMode="contains"
+          field="dataBaixa"
+          placeholder="Filtro de data"
+          ariaLabel="Filtro de data"/>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-forne>
+    <tr>
+      <td>{{ forne.razaoSocial }}</td>
+      <td>{{ forne.email }}</td>
+      <td>{{ forne.telefone }}</td>
+      <td>{{ forne.cnpj }}</td>
+      <td>{{ forne.dataBaixa }}</td>
+      <td>{{ forne.situacaoFornecedor }}</td>
+      <td width="200px">
+        <p-button severity="contrast"
+                  title="editar"
+                  (click)="editarFornecedor(forne)">
+          <i class="pi pi-pencil"></i>
+        </p-button>
+        <p-button severity="danger"
+                  title="excluir"
+                  (click)="excluirFornecedor(forne.id)">
+          <i class="pi pi-times"></i>
+        </p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-button type="button" severity="contrast" label="Novo Fornecedor" icon="pi pi-plus"
+          [routerLink]="['/cadastrofornecedores']"></p-button>
