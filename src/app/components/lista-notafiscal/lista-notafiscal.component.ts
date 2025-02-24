@@ -34,7 +34,6 @@ export class ListaNotafiscalComponent implements OnInit{
 
   onRowCollapse(event: TableRowCollapseEvent) {
     // console.log("onRowCollapse")
-
   }
 
   constructor(private router: Router,
